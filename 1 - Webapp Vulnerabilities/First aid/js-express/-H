@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>path is not defined</h1>
+<h2></h2>
+<pre>ReferenceError: path is not defined
+    at /workspaces/js-express/src/routes/login.js:8:16
+    at Layer.handle [as handle_request] (/workspaces/js-express/node_modules/express/lib/router/layer.js:95:5)
+    at next (/workspaces/js-express/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/workspaces/js-express/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/workspaces/js-express/node_modules/express/lib/router/layer.js:95:5)
+    at /workspaces/js-express/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/workspaces/js-express/node_modules/express/lib/router/index.js:335:12)
+    at next (/workspaces/js-express/node_modules/express/lib/router/index.js:275:10)
+    at Function.handle (/workspaces/js-express/node_modules/express/lib/router/index.js:174:3)
+    at router (/workspaces/js-express/node_modules/express/lib/router/index.js:47:12)</pre>
+
+  </body>
+</html>
