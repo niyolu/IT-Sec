@@ -14,8 +14,8 @@ router.post('/', (req, res) => {
   const password = req.body.password;
   let valid = undefined;
 
-  let query = `SELECT name, password FROM users WHERE name = '${username}' AND password = '${password}'`;
-
+  // let query = `SELECT name, password FROM users WHERE name = "${username}" AND password = "${password}"`;
+  let query = 'SELECT * FROM Users WHERE name = "' + username + '" AND password = "' + password + '";'
   console.log('login-query: ' + query);
 
   
@@ -23,12 +23,15 @@ router.post('/', (req, res) => {
   //   if (err) throw err;
   //   console.log(rows);
   // });
-  db.connection.query(query, (err, rows, fields) => {
+
+  
+  db.connection.execute(query, (err, rows, fields) => {
     if (err) {
       console.log(err);
       throw err
     };
-    valid = rows.length == 1;
+    valid = rows.length > 0;
+    console.log(rows.length)
     console.log(valid);
     console.log('user: ', rows[0]);
     res.send((valid ? `welcome user ${username}` : 'bad authentification') + "\n");
