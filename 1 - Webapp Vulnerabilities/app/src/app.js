@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var postsRouter = require('./routes/posts');
+var registerRouter = require('./routes/register');
 
 var app = express();
 
@@ -27,7 +28,7 @@ app.use(cookieSession({
     maxAge: 1000 * 60 * 60,
     secure: false
   },
-  keys: []
+  keys: ["wat"]
 }))
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/register', registerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
