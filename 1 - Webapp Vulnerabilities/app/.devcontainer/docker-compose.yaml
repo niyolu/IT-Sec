@@ -32,3 +32,7 @@ services:
       - ../mariadb-data:/var/lib/mysql
     environment:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+
+  # links:
+  #   - "database:db"
+
