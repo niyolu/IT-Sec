@@ -2,27 +2,50 @@ const express = require('express');
 const postsRouter = express.Router();
 const db = require('../helpers/db');
 const path = require('path');
-const app = require('../app');
+const fs = require('fs');
+
+transform_post = (post) => {
+    return `<li><div><p>${post.username}</p><p>${post.text}</p></div></li>`;
+}
 
 postsRouter.get('/', (req, res) => {
     const static_file = path.join(__dirname, "../../", "static/posts.html");
-    // get posts
+    const query = 'SELECT username, text FROM posts';
+    db.connection.query(query, (err, rows, fields) => {
+        if (err) {
+            console.log(err);
+            throw err
+        };
 
-    
-    // insert posts into static file
+        posts_data = rows
+            .map(transform_post)
+            .join('\n');
 
-    res.sendFile(static_file);
+        console.log("posts_data", posts_data)
+
+        fs.readFile(static_file, 'utf8', function (err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            const templated_html = data.replace("INSERT_POSTS", posts_data)
+
+            // console.log('templated posts html', templated_html );
+            res.send(templated_html);
+        });
+    });
 });
 
-postsRouter.post("/post", (req, res) => {
-    var myData = new User(req.body);
-    myData.save()
-    .then(item => {
-        console.log(item);
-    })
-    .catch(err => {
-        res.status(400).send("unable to save to database");
+postsRouter.post("/", (req, res) => {
+    const user = req.body.username;
+    const text = req.body.text.replaceAll("\"", "'");
+    const query = `INSERT INTO posts (username, text) VALUES ("${user}", "${text}")`;
+    db.connection.query(query, (err, rows, fields) => {
+        if (err) {
+            console.log(err);
+            throw err
+        };
+        res.send({user, text});
     });
-   });
+});
 
 module.exports = postsRouter;
