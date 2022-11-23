@@ -7,7 +7,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Create and populate MariaDB
-RUN mariadb -h db -u root ponyfarm < script.sql > output.tab
+RUN mariadb -h db -u root ponyfarm < ../script.sql > output.tab
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
