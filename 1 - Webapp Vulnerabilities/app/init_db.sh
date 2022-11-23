@@ -1,0 +1,1 @@
+mariadb -h db -u root < script.sql
