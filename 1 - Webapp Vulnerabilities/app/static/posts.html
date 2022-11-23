@@ -9,29 +9,31 @@
     <button class="addBtn" onclick="addPost()">Add</button>
 
     <ul id="allPost">
-
+      INSERT_POSTS
     </ul>
+    <!--> TABELLE mit GET auf posts </!-->
+
   </body>
 </html>
 <script>
   function addPost() {
-      const data = { text: document.getElementById('textInput').value};
-     fetch("http://localhost:3000/posts", {
+    const data = { username: 'marcellus', text: document.getElementById('textInput').value };
+    fetch("http://localhost:3000/posts", {
       method:'POST',
       body: JSON.stringify(data),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json' 
       }
-     }).then((response) => {
-          console.log(response);
-          return response.json()
-      }).then((res) => {
-        if (res.status === 201) {
-          console.log("Post successfully created!")
-        }
-      }).catch((error) => {
-          console.log(error)
-      })
+    }).then((response) => {
+      if (res.status === 201) {
+        console.log("Post successfully created!");
+      }
+      return response.json();
+    }).then((res) => {
+      // refresh
+    }).catch((error) => {
+        console.log(error)
+    })
   }
 </script>
