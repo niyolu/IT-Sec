@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./src/bin/www",
-    "exploit": "node ./exploit/sql-injection.js"
+    "sql-injection": "node ./exploits/sql-injection.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
