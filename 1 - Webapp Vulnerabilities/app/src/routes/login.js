@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-var db = require('../helpers/db');
-var path = require('path');
+const db = require('../helpers/db');
+const path = require('path');
 
 
 
@@ -13,24 +13,16 @@ router.post('/', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  // let query = `SELECT name, password FROM users WHERE name = "${username}" AND password = "${password}"`;
-  let query = 'SELECT * FROM Users WHERE name = "' + username + '" AND password = "' + password + '";'
+  const query = `SELECT name, password FROM users WHERE name = "${username}" AND password = "${password}"`;
   console.log('login-query: ' + query);
-
   
-  // db.connection.query("SELECT * FROM users", (err, rows, fields) => {
-  //   if (err) throw err;
-  //   console.log(rows);
-  // });
-
-  
-  db.connection.execute(query, (err, rows, fields) => {
+  db.connection.query(query, (err, rows, fields) => {
     if (err) {
       console.log(err);
       throw err
     };
-    let valid = rows.length > 0;
-    let user = rows[0];
+    const valid = rows.length > 0;
+    const user = rows[0];
 
     console.log("rows", rows)
     
