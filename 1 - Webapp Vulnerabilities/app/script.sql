@@ -9,6 +9,6 @@ WHERE NOT EXISTS (SELECT * from users
     WHERE email = 'admin@example.com' AND name = 'Admin' AND password = 'password' LIMIT 1);
 
 INSERT INTO posts (username, text)
-SELECT 'Admin',  'Welcome to <blog name>, please behave and stuff' FROM DUAL
+SELECT 'Admin',  'Welcome to BLORG, please behave and stuff' FROM DUAL
 WHERE NOT EXISTS (SELECT * from posts
     WHERE username = 'Admin' AND text = 'Welcome to <blog name>, please behave and stuff' LIMIT 1);
