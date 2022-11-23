@@ -25,15 +25,18 @@ postsRouter.get('/', (req, res) => {
             if (err) {
                 return console.log(err);
             }
-            const templated_html = data.replace("INSERT_POSTS", posts_data)
 
-            // console.log('templated posts html', templated_html );
+            const templated_html = data.replace("INSERT_POSTS", posts_data)
             res.send(templated_html);
         });
     });
 });
 
 postsRouter.post("/", (req, res) => {
+    if (!req.session.isAuth)
+        res.status(400).send("Unauthorized");
+    
+
     const user = req.body.username;
     const text = req.body.text.replaceAll("\"", "'");
     const query = `INSERT INTO posts (username, text) VALUES ("${user}", "${text}")`;

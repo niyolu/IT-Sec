@@ -3,8 +3,6 @@ const router = express.Router();
 const db = require('../helpers/db');
 const path = require('path');
 
-
-
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "../../", "static/login.html"));
 });
@@ -23,12 +21,13 @@ router.post('/', (req, res) => {
     };
     const valid = rows.length > 0;
     const user = rows[0];
-
-    console.log("rows", rows)
     
-    // add session logic+
-
-    res.send((valid ? `welcome user ${user.username}` : 'bad authentification') + "\n");
+    req.session.isAuth = valid;
+    
+    console.log('rows', rows)
+    
+    // add session logic
+    res.send((valid ? `welcome user ${user.name}` : 'bad authentification') + "\n");
   });
 });
 
