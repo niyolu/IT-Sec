@@ -1,7 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieSession = require('cookie-session')
+// var cookieSession = require('cookie-session')
+var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var db = require('./helpers/db');
@@ -21,15 +22,18 @@ app.set('view engine', 'hbs');
 app.use(logger('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieSession({
-  name: 'session',
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 1000 * 60 * 60,
-    secure: false
-  },
-  keys: ["wat"]
-}))
+
+app.use(cookieParser())
+
+// app.use(cookieSession({
+//   name: 'session',
+//   saveUninitialized: false,
+//   cookie: {
+//     maxAge: 1000 * 60 * 60,
+//     secure: false
+//   },
+//   keys: ["wat"]
+// }))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
