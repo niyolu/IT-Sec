@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
       throw err
     };
     if (rows.length == 0) {
-      res.send('bad authentification');
+      res.send('bad authentication');
     }
     const user = rows[0];
     const db_username = user.name;
