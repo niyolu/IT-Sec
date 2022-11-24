@@ -4,20 +4,34 @@
 	<title>Register - by Nils Lübben & Marcel Marek</title>
   </head>
   <body>
-	<form action="/register" method="POST">
-        <div>
-            <label for="username">Username:</label>
-  	        <input type="text" id="username" name="username" placeholder="Username" required>
-        </div>
-        <div>
-            <label for="email">Email:</label>
-  	        <input type="text" id="email" name="email" placeholder="Email" required>
-        </div>
-        <div>
-            <label for="password">Passwort:</label> 
-  	        <input type="password" id="password" name="password" placeholder="Password" required>
-        </div>
-        <button type="submit" value="Register">REGISTER</button>
-	</form>
+  <div class="center">
+    <form action="/register" method="POST">
+          <div>
+              <label for="username">Username:</label>
+              <input type="text" id="username" name="username" placeholder="Username" required>
+          </div>
+          <div>
+              <label for="email">Email:</label>
+              <input type="text" id="email" name="email" placeholder="Email" required>
+          </div>
+          <div>
+              <label for="password">Passwort:</label> 
+              <input type="password" id="password" name="password" placeholder="Password" required>
+          </div>
+          <button type="submit" value="Register">REGISTER</button>
+    </form>
+  </div>
   </body>
 </html>
+
+<style>
+  .center{
+    width: 80%;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+</style>

@@ -4,14 +4,17 @@
 	<title>Posts - by Nils Lübben & Marcel Marek</title>
   </head>
   <body>
-    <h1>Add Post</h1>
-    <input type="text" id="textInput" placeholder="Write your comment here...">
-    <button class="addBtn" onclick="addPost()">Add</button>
+    <div class="center">
+      <h1>Add Post</h1>
+      <input type="text" id="textInput" placeholder="Write your comment here...">
+      <button class="addBtn" onclick="addPost()">Add</button>
+    </div>
 
-    <ul id="allPost">
-      INSERT_POSTS
-    </ul>
-
+    <div class="center">
+      <ul>
+        INSERT_POSTS
+      </ul>
+    </div>
   </body>
 </html>
 <script>
@@ -36,6 +39,15 @@
   }
 </script>
 <style>
+  .center{
+    width: 80%;
+    padding: 1rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
   ul{
     list-style-type: none;
   }
