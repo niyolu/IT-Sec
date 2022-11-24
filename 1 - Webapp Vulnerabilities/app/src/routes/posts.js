@@ -1,12 +1,13 @@
 const express = require('express');
-const postsRouter = express.Router();
+const router = express.Router();
 const db = require('../helpers/db');
+const { get_session } = require('../helpers/sessionstore');
 const path = require('path');
 const fs = require('fs');
 
-transform_post = (post) => { `<li><div><p>${post.username}</p><p>${post.text}</p></div></li>` };
+transform_post = (post) => { return `<li><div><p>${post.username}</p><p>${post.text}</p></div></li>`; };
 
-postsRouter.get('/', (req, res) => {
+router.get('/', (req, res) => {
     const static_file = path.join(__dirname, "../../", "static/posts.html");
     const query = 'SELECT username, text FROM posts';
     db.connection.query(query, (err, rows, fields) => {
@@ -19,6 +20,7 @@ postsRouter.get('/', (req, res) => {
             .map(transform_post)
             .join('\n');
 
+        console.log(rows);
         console.log("posts_data", posts_data)
 
         fs.readFile(static_file, 'utf8', function (err, data) {
@@ -32,12 +34,11 @@ postsRouter.get('/', (req, res) => {
     });
 });
 
-postsRouter.post("/", (req, res) => {
-    if (!req.session.isAuth)
-        res.status(400).send("Unauthorized");
-    
-
+router.post("/", (req, res) => {
     const user = req.body.username;
+    if (get_session(user) != req.cookies['session'])
+        res.status(400).send("Unauthorized");
+ 
     const text = req.body.text.replaceAll("\"", "'");
     const query = `INSERT INTO posts (username, text) VALUES ("${user}", "${text}")`;
     db.connection.query(query, (err, rows, fields) => {
@@ -49,4 +50,4 @@ postsRouter.post("/", (req, res) => {
     });
 });
 
-module.exports = postsRouter;
+module.exports = router;

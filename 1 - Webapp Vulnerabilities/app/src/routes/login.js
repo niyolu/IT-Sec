@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../helpers/db');
+const { save_session } = require('../helpers/sessionstore');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "../../", "static/login.html"));
@@ -19,18 +21,17 @@ router.post('/', (req, res) => {
       console.log(err);
       throw err
     };
-    const valid = rows.length > 0;
+    if (rows.length == 0) {
+      res.send('bad authentification');
+    }
     const user = rows[0];
-    
-    req.session.isAuth = valid;
+    const db_username = user.name;
 
-    console.log('rows', rows)
-    
-    // add session logic
-    res.send((valid ? `welcome user ${user.name}` : 'bad authentification') + "\n");
+    const SID = uuidv4();
+    save_session(db_username, SID);
+    res.cookie('session', SID, { signed: false });
+    res.send(`welcome user ${db_username}`);
   });
 });
-
-
 
 module.exports = router;
