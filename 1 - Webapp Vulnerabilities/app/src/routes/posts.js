@@ -36,10 +36,10 @@ router.get('/', (req, res) => {
 
 router.post("/", (req, res) => {
     const user = req.body.username;
-    // if (get_session(user) != req.cookies['session']){
-    //     res.status(400).send("Unauthorized");
-    //     return;
-    // }
+    if (get_session(user) != req.cookies['session']){
+        res.status(400).send("Unauthorized");
+        return;
+    }
  
     const text = req.body.text.replaceAll("\"", "'");
     const query = `INSERT INTO posts (username, text) VALUES ("${user}", "${text}")`;
