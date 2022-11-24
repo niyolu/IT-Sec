@@ -5,7 +5,7 @@ const { get_session } = require('../helpers/sessionstore');
 const path = require('path');
 const fs = require('fs');
 
-transform_post = (post) => { return `<li><div><p>${post.username}</p><p>${post.text}</p></div></li>`; };
+transform_post = (post) => { return `<li><p style="font-weight: bold">${post.username}:</p><p>${post.text}</p></li>`; };
 
 router.get('/', (req, res) => {
     const static_file = path.join(__dirname, "../../", "static/posts.html");
@@ -36,10 +36,10 @@ router.get('/', (req, res) => {
 
 router.post("/", (req, res) => {
     const user = req.body.username;
-    // if (get_session(user) != req.cookies['session']){
-    //     res.status(400).send("Unauthorized");
-    //     return;
-    // }
+    if (get_session(user) != req.cookies['session']){
+        res.status(400).send("Unauthorized");
+        return;
+    }
  
     const text = req.body.text.replaceAll("\"", "'");
     const query = `INSERT INTO posts (username, text) VALUES ("${user}", "${text}")`;
