@@ -23,12 +23,13 @@ router.post('/', async (req, res) =>  {
                 return reject("db", `${err.message}`);
             };
             if (rows.length > 0) {
+                console.log(rows);
                 if (password == rows.password) {
-                        res.status(500).send("Failed to register, User already exists");
-                    return reject("db");
+                    res.status(500).send("Failed to register, User already exists");
+                    return reject("db User already exists");
                 } else {
                     res.status(500).send("Failed to register, E-mail already in use");
-                    return reject("db");
+                    return reject("db E-mail already in use");
                 }
             };
             resolve();
@@ -40,8 +41,7 @@ router.post('/', async (req, res) =>  {
     }
     catch (error){
         console.log(error);
-        console.log("email already exists");
-        return
+        return;
     }
 
     const insert_user_query = `INSERT INTO users (email, password, name) VALUES ('${email}', '${password}', '${username}')`;
