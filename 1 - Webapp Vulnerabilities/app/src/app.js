@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var postsRouter = require('./routes/posts');
 var registerRouter = require('./routes/register');
+var resetRouter = require('./routes/reset');
 
 var app = express();
 
