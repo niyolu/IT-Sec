@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<title>Register - by Nils Lübben & Marcel Marek</title>
+	<title></title>
   </head>
   <body>
   <div class="center">
@@ -18,7 +18,7 @@
               <label for="password">Passwort:</label> 
               <input type="password" id="password" name="password" placeholder="Password" required>
           </div>
-          <button type="submit" value="Register">REGISTER</button>
+          <button type="submit" value="Register" onclick="save_name()">REGISTER</button>
     </form>
   </div>
   </body>
@@ -35,3 +35,10 @@
     transition: 0.3s;
   }
 </style>
+<script>
+  function save_name() {
+    let name = document.getElementById('username').value;
+    console.log("why")
+    localStorage.setItem("name", name);
+  } 
+</script>

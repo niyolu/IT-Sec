@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<title>Posts - by Nils Lübben & Marcel Marek</title>
+    <title>Posts</title>
   </head>
   <body>
     <div class="center">
@@ -21,8 +21,9 @@
 </html>
 <script>
   function addPost() {
-    const data = { username: 'marcellus', text: document.getElementById('textInput').value };
-    fetch("http://localhost:3000/posts", {
+    const username = localStorage.getItem("name");
+    const data = { username, text: document.getElementById('textInput').value };
+    fetch('http://localhost:3000/posts/', {
       method:'POST',
       body: JSON.stringify(data),
       headers: {

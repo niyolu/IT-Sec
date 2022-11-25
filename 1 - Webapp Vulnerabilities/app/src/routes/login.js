@@ -23,7 +23,9 @@ router.post('/', (req, res) => {
     };
     if (rows.length == 0) {
       res.send('bad authentication');
+      return;
     }
+    console.log('login query found ', rows.length, rows);
     const user = rows[0];
     const db_username = user.name;
 

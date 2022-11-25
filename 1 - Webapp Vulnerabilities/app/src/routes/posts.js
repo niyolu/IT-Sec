@@ -20,8 +20,7 @@ router.get('/', (req, res) => {
             .map(transform_post)
             .join('\n');
 
-        console.log(rows);
-        console.log("posts_data", posts_data)
+        console.log("posts_data", rows);
 
         fs.readFile(static_file, 'utf8', function (err, data) {
             if (err) {
@@ -36,7 +35,13 @@ router.get('/', (req, res) => {
 
 router.post("/", (req, res) => {
     const user = req.body.username;
+    if (!user) {
+        console.log(user + "not authorized to post");
+        res.status(400).send("Unauthorized");
+        return;
+    }
     if (get_session(user) != req.cookies['session']){
+        console.log(user + "not authorized to post");
         res.status(400).send("Unauthorized");
         return;
     }
