@@ -23,13 +23,12 @@ router.post('/', async (req, res) =>  {
                 return reject("db", `${err.message}`);
             };
             if (rows.length > 0) {
-                console.log(rows);
-                if (password == rows.password) {
-                    res.status(500).send("Failed to register, User already exists");
-                    return reject("db User already exists");
-                } else {
+                if (email == rows[0].email) {
                     res.status(500).send("Failed to register, E-mail already in use");
                     return reject("db E-mail already in use");
+                } else if (password == rows[0].password && username == rows[0].name) {
+                    res.status(500).send("Failed to register, User already exists");
+                    return reject("db User already exists");
                 }
             };
             resolve();
