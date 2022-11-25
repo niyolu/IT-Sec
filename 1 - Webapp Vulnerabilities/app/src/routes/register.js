@@ -15,10 +15,11 @@ router.post('/', async (req, res) =>  {
     const password = req.body.password;
     console.log(`register: ${username}, ${email}, ${password}`);
 
-    const email_exists_query = `SELECT * FROM users WHERE email = '${email}' OR (name = '${username}' AND password = '${password}')`;
+    const email_exists_query = `SELECT * FROM users WHERE email = '${email}' OR name = '${username}' OR password = '${password}'`;
     const query_future = new Promise((resolve, reject) => {
         db.connection.query(email_exists_query, (err, rows, fields) => {
             if (err) {
+                console.log(err);
                 res.status(500).send("Failed to register");
                 return reject("db", `${err.message}`);
             };
@@ -26,8 +27,11 @@ router.post('/', async (req, res) =>  {
                 if (email == rows[0].email) {
                     res.status(500).send("Failed to register, E-mail already in use");
                     return reject("db E-mail already in use");
-                } else if (password == rows[0].password && username == rows[0].name) {
+                } else if (username == rows[0].name) {
                     res.status(500).send("Failed to register, User already exists");
+                    return reject("db User already exists");
+                } else if (password == rows[0].password) {
+                    res.status(500).send("Failed to register, Password already in use by " + rows[0].name);
                     return reject("db User already exists");
                 }
             };
