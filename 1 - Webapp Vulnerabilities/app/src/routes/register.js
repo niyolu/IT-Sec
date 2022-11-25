@@ -15,19 +15,22 @@ router.post('/', async (req, res) =>  {
     const password = req.body.password;
     console.log(`register: ${username}, ${email}, ${password}`);
 
-    const user_exists_query = `SELECT * FROM users WHERE name = '${username}'`;
-    
+    const email_exists_query = `SELECT * FROM users WHERE email = '${email}' OR (name = '${username}' AND password = '${password}')`;
     const query_future = new Promise((resolve, reject) => {
-        db.connection.query(user_exists_query, (err, rows, fields) => {
+        db.connection.query(email_exists_query, (err, rows, fields) => {
             if (err) {
                 res.status(500).send("Failed to register");
                 return reject("db", `${err.message}`);
             };
             if (rows.length > 0) {
-                res.status(500).send("Failed to register");
-                return reject("db");
+                if (password == rows.password) {
+                        res.status(500).send("Failed to register, User already exists");
+                    return reject("db");
+                } else {
+                    res.status(500).send("Failed to register, E-mail already in use");
+                    return reject("db");
+                }
             };
-            console.log("user doesn't exist yet")
             resolve();
         });
     });
@@ -37,7 +40,7 @@ router.post('/', async (req, res) =>  {
     }
     catch (error){
         console.log(error);
-        console.log("user already exists");
+        console.log("email already exists");
         return
     }
 
