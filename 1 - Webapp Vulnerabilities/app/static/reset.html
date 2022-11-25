@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Reset Password</title>
+  </head>
+  <body>
+    <div class="center">
+      <div>
+        <h1>Reset</h1>
+        <label for="username">New Password:</label>
+        <input type="text" id="new_password" name="new_password" placeholder="NewPassword" required>
+        <button type="submit" id="resetBtn" value="OK" onclick="reset_password()">X</button>
+      </div>
+    </div>
+  </body>
+</html>
+<style>
+.resetBtn{
+    background-color: aliceblue;
+}
+</style>
+<script>
+    async function reset_password (){
+    let pw = document.getElementById('new_password').value;
+    await fetch(`/reset?new_password=${pw}`, { method: 'GET' });
+  } 
+</script>
